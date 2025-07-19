@@ -1,0 +1,74 @@
+.card {
+    max-width: 40rem;
+    height: 18rem;
+    border: 1px solid black;
+    border-radius: 2rem;
+    position: relative;
+    padding: 1.25rem 0.75rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin: 0 auto;
+    background-color: white;
+}
+
+.product-image {
+    width: 15rem;
+    height: 15rem; 
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.card-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.card-title {
+    font-size: 1rem;
+    margin: 0;
+}
+
+.card-category {
+    margin: 0.5rem 0;
+    font-size: 1rem; 
+}
+
+.card-price {
+    font-size: 1rem;
+    margin: 0;
+    font-weight: bold;
+}
+
+.card-buttons {
+    position: absolute;
+    bottom: 1.25rem;
+    right: 0.75rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.edit-btn {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    font-size: 0.75rem;
+    background-color: gray;
+    color: black;
+}
+
+.delete-btn {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    font-size: 0.75rem;
+    background-color: #d32f2f;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #ff0000;
+}
