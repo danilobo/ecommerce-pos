@@ -1,56 +1,49 @@
 // src/App.tsx
-import React, { useState, useEffect } from 'react';
-import ProductCard from './components/ProductCard/ProductCard';
-import FilterBar from './components/FilterBar/FilterBar';
-import { Product } from './types';
-import productsData from './data.json';
+import React from 'react';
+import { 
+  createBrowserRouter, 
+  RouterProvider,
+  createRoutesFromElements,
+  Route
+} from 'react-router-dom';
+import MainNavigation from './components/MainNavigation/MainNavigation';
+import ProductList from './pages/ProductList/ProductList';
+import NewProduct from './pages/NewProduct/NewProduct';
+import { ProductProvider } from './context/ProductContext';
+import { productLoader } from './loaders/productLoader';
 import './App.css';
 
-const App: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [codeFilter, setCodeFilter] = useState<string>('');
-
-  useEffect(() => {
-    // Carrega os dados do arquivo data.json
-    setProducts(productsData as Product[]);
-    setFilteredProducts(productsData as Product[]);
-  }, []);
-
-  const handleFilter = () => {
-    if (!codeFilter.trim()) {
-      // Se o campo estiver vazio, exibe todos os produtos
-      setFilteredProducts(products);
-    } else {
-      // Filtra pelo código do produto (id)
-      const filtered = products.filter(product => 
-        product.id === parseInt(codeFilter)
-      );
-      setFilteredProducts(filtered);
-    }
-  };
-
-  return (
-    <div className="app-container">
-      <h1>Portal de Produtos</h1>
-      
-      <FilterBar 
-        codeFilter={codeFilter} 
-        setCodeFilter={setCodeFilter} 
-        handleFilter={handleFilter} 
+// Cria as rotas com a função loader
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route 
+      path="/" 
+      id="root"  // ID para a rota raiz
+      element={<MainNavigation />}
+      loader={productLoader}
+    >
+      <Route 
+        index 
+        element={
+          <ProductProvider>
+            <ProductList />
+          </ProductProvider>
+        } 
       />
-      
-      <div className="products-container">
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))
-        ) : (
-          <p className="no-products">Nenhum produto encontrado com o código informado.</p>
-        )}
-      </div>
-    </div>
-  );
+      <Route 
+        path="novo" 
+        element={
+          <ProductProvider>
+            <NewProduct />
+          </ProductProvider>
+        } 
+      />
+    </Route>
+  )
+);
+
+const App: React.FC = () => {
+  return <RouterProvider router={router} />;
 };
 
 export default App;
