@@ -1,0 +1,32 @@
+/* src/pages/ProductList/ProductList.css */
+.product-list-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.product-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-list-header h2 {
+  margin: 0;
+  color: #333;
+}
+
+.new-product-button {
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.new-product-button:hover {
+  background-color: #1b5e20;
+}
