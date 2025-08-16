@@ -1,5 +1,7 @@
+// src/components/ProductCard/ProductCard.tsx
 import React from 'react';
 import { Product } from '../../types';
+import { useProducts } from '../../context/ProductContext';
 import './ProductCard.css';
 
 interface ProductCardProps {
@@ -7,6 +9,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const { deleteProduct, isLoading } = useProducts();
 
   const formatPrice = (price: number): string => {
     return new Intl.NumberFormat('pt-BR', {
@@ -17,10 +20,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   const handleEdit = () => {
     alert('Editar clicked!');
+    // Futura navegação para página de edição
+    // navigate(`/editar/${product.id}`)
   };
 
-  const handleDelete = () => {
-    alert('Excluir clicked!');
+  const handleDelete = async () => {
+    if (window.confirm(`Tem certeza que deseja excluir o produto "${product.name}"?`)) {
+      await deleteProduct(product.id);
+    }
   };
 
   return (
@@ -39,7 +46,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
       <div className="card-buttons">
         <button className="edit-btn" onClick={handleEdit}>Editar</button>
-        <button className="delete-btn" onClick={handleDelete}>Excluir</button>
+        <button 
+          className="delete-btn" 
+          onClick={handleDelete}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Aguarde...' : 'Excluir'}
+        </button>
       </div>
     </div>
   );

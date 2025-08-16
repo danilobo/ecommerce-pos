@@ -1,5 +1,7 @@
+// src/loaders/productLoader.ts
+import { getAllProducts } from '../services/productService';
 import { Product } from '../types';
-import productsData from '../data.json';
+import { initializeAuth } from '../services/authService';
 
 // Interface para os dados retornados pelo loader
 export interface LoaderData {
@@ -8,10 +10,20 @@ export interface LoaderData {
 
 // Função loader para carregar produtos
 export async function productLoader(): Promise<LoaderData> {
-  // Simulação de uma chamada assíncrona
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({ products: productsData as Product[] });
-    }, 200);
-  });
+  console.log('Iniciando product loader');
+  
+  // Garantir que o token esteja disponível
+  initializeAuth();
+  
+  try {
+    console.log('Buscando produtos da API...');
+    const products = await getAllProducts();
+    console.log(`${products.length} produtos carregados com sucesso`);
+    return { products };
+  } catch (error) {
+    console.error('Erro no loader de produtos:', error);
+    
+    // Retornar array vazio em caso de erro
+    return { products: [] };
+  }
 }

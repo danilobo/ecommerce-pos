@@ -7,7 +7,7 @@ import { useProducts } from '../../context/ProductContext';
 import './ProductList.css';
 
 const ProductList: React.FC = () => {
-  const { products } = useProducts();
+  const { products, isLoading, error } = useProducts();
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [codeFilter, setCodeFilter] = useState('');
   const navigate = useNavigate();
@@ -17,7 +17,6 @@ const ProductList: React.FC = () => {
     setFilteredProducts(products);
   }, [products]);
 
-  // Nova função para lidar com a mudança de filtro
   const handleFilterChange = (value: string) => {
     if (!value.trim()) {
       setFilteredProducts(products);
@@ -48,18 +47,24 @@ const ProductList: React.FC = () => {
       <FilterBar 
         codeFilter={codeFilter} 
         setCodeFilter={setCodeFilter} 
-        onFilterChange={handleFilterChange} // Nova prop passada para o FilterBar
+        onFilterChange={handleFilterChange}
       />
       
-      <div className="products-container">
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))
-        ) : (
-          <p className="no-products">Nenhum produto encontrado com o código informado.</p>
-        )}
-      </div>
+      {error && <div className="error-message">{error}</div>}
+      
+      {isLoading ? (
+        <div className="loading">Carregando produtos...</div>
+      ) : (
+        <div className="products-container">
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map(product => (
+              <ProductCard key={product.id} product={product} />
+            ))
+          ) : (
+            <p className="no-products">Nenhum produto encontrado com o código informado.</p>
+          )}
+        </div>
+      )}
     </div>
   );
 };
