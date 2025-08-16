@@ -17,12 +17,13 @@ const ProductList: React.FC = () => {
     setFilteredProducts(products);
   }, [products]);
 
-  const handleFilter = () => {
-    if (!codeFilter.trim()) {
+  // Nova função para lidar com a mudança de filtro
+  const handleFilterChange = (value: string) => {
+    if (!value.trim()) {
       setFilteredProducts(products);
     } else {
       const filtered = products.filter(product => 
-        product.id === parseInt(codeFilter)
+        product.id === parseInt(value)
       );
       setFilteredProducts(filtered);
     }
@@ -47,10 +48,9 @@ const ProductList: React.FC = () => {
       <FilterBar 
         codeFilter={codeFilter} 
         setCodeFilter={setCodeFilter} 
-        handleFilter={handleFilter} 
+        onFilterChange={handleFilterChange} // Nova prop passada para o FilterBar
       />
       
-      {/* Reutiliza a classe products-container existente */}
       <div className="products-container">
         {filteredProducts.length > 0 ? (
           filteredProducts.map(product => (
