@@ -1,0 +1,66 @@
+/* src/pages/NewProduct/NewProduct.css */
+.new-product-page {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.new-product-page h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.new-product-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.cancel-button {
+  background-color: #9e9e9e;
+  color: white;
+}
+
+.create-button {
+  background-color: #2e7d32;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #757575;
+}
+
+.create-button:hover {
+  background-color: #1b5e20;
+}
