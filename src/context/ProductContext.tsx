@@ -2,6 +2,7 @@
 import React, { createContext, useState, useContext, ReactNode, useCallback } from 'react';
 import { useRouteLoaderData, useNavigate } from 'react-router-dom';
 import { Product } from '../types';
+import { getToken } from '../services/authService';
 import { LoaderData } from '../loaders/productLoader';
 import { 
   createProduct, 
@@ -34,6 +35,12 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     setError(null);
     
     try {
+      // Garantir que temos um token
+      const token = getToken();
+      if (!token) {
+        throw new Error('Token de autenticação não encontrado');
+      }
+      
       const newProduct = await createProduct(productData);
       setProducts(prevProducts => [...prevProducts, newProduct]);
       navigate('/');
