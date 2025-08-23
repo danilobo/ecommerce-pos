@@ -6,8 +6,8 @@ import { getToken } from '../services/authService';
 import { LoaderData } from '../loaders/productLoader';
 import { 
   createProduct, 
-  updateProduct, 
-  deleteProduct 
+  updateProduct as updateProductService, 
+  deleteProduct as deleteProductService
 } from '../services/productService';
 
 interface ProductContextType {
@@ -58,15 +58,20 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     setError(null);
     
     try {
-      const updatedProduct = await updateProduct(id, productData);
+      const updatedProduct = await updateProductService(id, productData);
       setProducts(prevProducts => 
         prevProducts.map(product => 
           product.id === id ? updatedProduct : product
         )
       );
+      
+      // Feedback opcional
+      console.log(`Produto ${id} atualizado com sucesso`);
+      
     } catch (err) {
       setError('Erro ao atualizar produto. Por favor, tente novamente.');
       console.error('Erro ao atualizar produto:', err);
+      throw err; // Propagando o erro para tratamento no componente
     } finally {
       setIsLoading(false);
     }
@@ -78,7 +83,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     setError(null);
     
     try {
-      await deleteProduct(id);
+      await deleteProductService(id);
       setProducts(prevProducts => 
         prevProducts.filter(product => product.id !== id)
       );

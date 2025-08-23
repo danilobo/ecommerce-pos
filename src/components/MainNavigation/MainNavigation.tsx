@@ -1,4 +1,4 @@
-// src/components/Layout/Layout.tsx
+// src/components/MainNavigation/MainNavigation.tsx
 import React from 'react';
 import { Outlet, useLoaderData } from 'react-router-dom';
 import Header from '../Header/Header';

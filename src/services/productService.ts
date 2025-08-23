@@ -6,7 +6,7 @@ import axios from 'axios';
 // Obter todos os produtos
 export const getAllProducts = async (): Promise<Product[]> => {
   try {
-    const response = await api.get('/products');
+    const response = await api.get('/api/product');
     return response.data;
   } catch (error) {
     console.error('Erro ao buscar produtos:', error);
@@ -17,7 +17,7 @@ export const getAllProducts = async (): Promise<Product[]> => {
 // Obter produto por ID
 export const getProductById = async (id: number): Promise<Product> => {
   try {
-    const response = await api.get(`/products/${id}`);
+    const response = await api.get(`/api/product/${id}`);
     return response.data;
   } catch (error) {
     console.error(`Erro ao buscar produto ${id}:`, error);
@@ -31,7 +31,7 @@ export const createProduct = async (product: Omit<Product, 'id'>): Promise<Produ
     console.log('Enviando requisição para criar produto:', product);
     console.log('Headers da requisição:', api.defaults.headers);
     
-    const response = await api.post('/products', product);
+    const response = await api.post('/api/product', product);
     console.log('Resposta da criação de produto:', response.data);
     return response.data;
   } catch (error) {
@@ -49,7 +49,8 @@ export const createProduct = async (product: Omit<Product, 'id'>): Promise<Produ
 // Atualizar produto existente
 export const updateProduct = async (id: number, product: Omit<Product, 'id'>): Promise<Product> => {
   try {
-    const response = await api.put(`/products/${id}`, product);
+    console.log(product)
+    const response = await api.put(`/api/product/${id}`, product);
     return response.data;
   } catch (error) {
     console.error(`Erro ao atualizar produto ${id}:`, error);
@@ -60,7 +61,7 @@ export const updateProduct = async (id: number, product: Omit<Product, 'id'>): P
 // Atualizar apenas a imagem do produto
 export const updateProductImage = async (id: number, imageUrl: string): Promise<Product> => {
   try {
-    const response = await api.put(`/products/${id}/image`, { pictureUrl: imageUrl });
+    const response = await api.put(`/api/product/${id}/image`, { pictureUrl: imageUrl });
     return response.data;
   } catch (error) {
     console.error(`Erro ao atualizar imagem do produto ${id}:`, error);
@@ -71,7 +72,7 @@ export const updateProductImage = async (id: number, imageUrl: string): Promise<
 // Excluir produto
 export const deleteProduct = async (id: number): Promise<void> => {
   try {
-    await api.delete(`/products/${id}`);
+    await api.delete(`/api/product/${id}`);
   } catch (error) {
     console.error(`Erro ao excluir produto ${id}:`, error);
     throw error;

@@ -58,7 +58,7 @@ const ProductList: React.FC = () => {
         <div className="products-container">
           {filteredProducts.length > 0 ? (
             filteredProducts.map(product => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={`product-${product.id}`} product={product} />
             ))
           ) : (
             <p className="no-products">Nenhum produto encontrado com o código informado.</p>
