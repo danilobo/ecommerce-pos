@@ -7,7 +7,7 @@ import { useProducts } from '../../context/ProductContext';
 import './ProductList.css';
 
 const ProductList: React.FC = () => {
-  const { products } = useProducts();
+  const { products, isLoading, error } = useProducts();
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [codeFilter, setCodeFilter] = useState('');
   const navigate = useNavigate();
@@ -17,12 +17,12 @@ const ProductList: React.FC = () => {
     setFilteredProducts(products);
   }, [products]);
 
-  const handleFilter = () => {
-    if (!codeFilter.trim()) {
+  const handleFilterChange = (value: string) => {
+    if (!value.trim()) {
       setFilteredProducts(products);
     } else {
       const filtered = products.filter(product => 
-        product.id === parseInt(codeFilter)
+        product.id === parseInt(value)
       );
       setFilteredProducts(filtered);
     }
@@ -47,19 +47,24 @@ const ProductList: React.FC = () => {
       <FilterBar 
         codeFilter={codeFilter} 
         setCodeFilter={setCodeFilter} 
-        handleFilter={handleFilter} 
+        onFilterChange={handleFilterChange}
       />
       
-      {/* Reutiliza a classe products-container existente */}
-      <div className="products-container">
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))
-        ) : (
-          <p className="no-products">Nenhum produto encontrado com o código informado.</p>
-        )}
-      </div>
+      {error && <div className="error-message">{error}</div>}
+      
+      {isLoading ? (
+        <div className="loading">Carregando produtos...</div>
+      ) : (
+        <div className="products-container">
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map(product => (
+              <ProductCard key={product.id} product={product} />
+            ))
+          ) : (
+            <p className="no-products">Nenhum produto encontrado com o código informado.</p>
+          )}
+        </div>
+      )}
     </div>
   );
 };

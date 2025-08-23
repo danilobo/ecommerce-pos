@@ -6,7 +6,7 @@ import './NewProduct.css';
 
 const NewProduct: React.FC = () => {
   const navigate = useNavigate();
-  const { addProduct } = useProducts();
+  const { addProduct, isLoading, error } = useProducts();
   
   const [formData, setFormData] = useState({
     name: '',
@@ -24,7 +24,7 @@ const NewProduct: React.FC = () => {
     }));
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Converter o preço para número
@@ -33,8 +33,7 @@ const NewProduct: React.FC = () => {
       price: parseFloat(formData.price)
     };
     
-    addProduct(newProduct);
-    navigate('/');
+    await addProduct(newProduct);
   };
   
   const handleCancel = () => {
@@ -44,6 +43,8 @@ const NewProduct: React.FC = () => {
   return (
     <div className="new-product-page">
       <h2>Cadastrar Novo Produto</h2>
+      
+      {error && <div className="error-message">{error}</div>}
       
       <form className="new-product-form" onSubmit={handleSubmit}>
         <div className="form-group">
@@ -109,11 +110,20 @@ const NewProduct: React.FC = () => {
         </div>
         
         <div className="form-buttons">
-          <button type="button" className="cancel-button" onClick={handleCancel}>
+          <button 
+            type="button" 
+            className="cancel-button" 
+            onClick={handleCancel}
+            disabled={isLoading}
+          >
             Cancelar
           </button>
-          <button type="submit" className="create-button">
-            Criar
+          <button 
+            type="submit" 
+            className="create-button"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Salvando...' : 'Criar'}
           </button>
         </div>
       </form>

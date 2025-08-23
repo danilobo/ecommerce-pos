@@ -1,5 +1,5 @@
 // src/App.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import { 
   createBrowserRouter, 
   RouterProvider,
@@ -11,6 +11,7 @@ import ProductList from './pages/ProductList/ProductList';
 import NewProduct from './pages/NewProduct/NewProduct';
 import { ProductProvider } from './context/ProductContext';
 import { productLoader } from './loaders/productLoader';
+import { initializeAuth } from './services/authService';
 import './App.css';
 
 // Cria as rotas com a função loader
@@ -18,7 +19,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route 
       path="/" 
-      id="root"  // ID para a rota raiz
+      id="root"
       element={<MainNavigation />}
       loader={productLoader}
     >
@@ -43,6 +44,11 @@ const router = createBrowserRouter(
 );
 
 const App: React.FC = () => {
+  useEffect(() => {
+    // Inicializa o token automaticamente ao carregar a aplicação
+    initializeAuth();
+  }, []);
+
   return <RouterProvider router={router} />;
 };
 
