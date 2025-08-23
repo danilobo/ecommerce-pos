@@ -12,7 +12,7 @@ import {
 
 interface ProductContextType {
   products: Product[];
-  addProduct: (product: Omit<Product, 'id'>) => Promise<void>;
+  addProduct: (product: Omit<Product, 'id'>) => Promise<Product>;
   updateProduct: (id: number, product: Omit<Product, 'id'>) => Promise<void>;
   deleteProduct: (id: number) => Promise<void>;
   isLoading: boolean;
@@ -43,14 +43,19 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
       
       const newProduct = await createProduct(productData);
       setProducts(prevProducts => [...prevProducts, newProduct]);
-      navigate('/');
+      
+      // Não navegar automaticamente ao criar produto do CSV
+      // navigate('/'); - Remover essa linha ou torná-la opcional
+      
+      return newProduct; // Retornar o produto criado
     } catch (err) {
       setError('Erro ao adicionar produto. Por favor, tente novamente.');
       console.error('Erro ao adicionar produto:', err);
+      throw err; // Propagar o erro para tratamento no componente
     } finally {
       setIsLoading(false);
     }
-  }, [navigate]);
+  }, [/* navigate, */ setProducts, setIsLoading, setError]);
 
   // Atualizar produto
   const updateProductHandler = useCallback(async (id: number, productData: Omit<Product, 'id'>) => {

@@ -30,3 +30,53 @@
 .new-product-button:hover {
   background-color: #1b5e20;
 }
+
+.product-list-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.csv-toggle-button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.csv-toggle-button:hover {
+  background-color: #1565c0;
+}
+
+.csv-toggle-button.active {
+  background-color: #0d47a1;
+}
+
+.no-products {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  padding: 2rem;
+  background-color: #f5f5f5;
+  border-radius: 0.75rem;
+  margin: 2rem 0;
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  border-left: 4px solid #c62828;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #666;
+}

@@ -6,12 +6,14 @@ interface FilterBarProps {
   codeFilter: string;
   setCodeFilter: (value: string) => void;
   onFilterChange: (value: string) => void;
+  onSearch: (code: string) => void; // Nova prop para busca direta
 }
 
 const FilterBar: React.FC<FilterBarProps> = ({ 
   codeFilter, 
   setCodeFilter, 
-  onFilterChange 
+  onFilterChange,
+  onSearch
 }) => {
   // Estado local para controlar o valor do input
   const [inputValue, setInputValue] = useState(codeFilter);
@@ -35,19 +37,39 @@ const FilterBar: React.FC<FilterBarProps> = ({
     setInputValue(e.target.value);
   };
 
+  // Manipula o clique no botão de busca
+  const handleSearchClick = () => {
+    onSearch(inputValue);
+  };
+
+  // Manipula a tecla Enter
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onSearch(inputValue);
+    }
+  };
+
   return (
     <div className="filter-bar">
       <div className="filter-input-group">
         <label htmlFor="code-filter">Código:</label>
-        <input
-          id="code-filter"
-          type="number"
-          value={inputValue}
-          onChange={handleChange}
-          placeholder="Digite o código do produto"
-        />
+        <div className="input-with-button">
+          <input
+            id="code-filter"
+            type="number"
+            value={inputValue}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            placeholder="Digite o código do produto"
+          />
+          <button 
+            className="search-button"
+            onClick={handleSearchClick}
+          >
+            Buscar
+          </button>
+        </div>
       </div>
-      {/* Botão de filtrar foi removido */}
     </div>
   );
 };
