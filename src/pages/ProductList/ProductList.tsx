@@ -44,7 +44,6 @@ const ProductList: React.FC = () => {
       setFilteredProducts(products);
       return;
     }
-    let codeAsNumber = Number(code);
     try {
       setSearchLoading(true);
       const product = await getProductById(code);

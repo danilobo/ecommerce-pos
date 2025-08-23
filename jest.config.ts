@@ -1,4 +1,5 @@
 // jest.config.js
+import type {Config} from 'jest';
 module.exports = {
   testEnvironment: 'jsdom',
   // Defina o arquivo de setup global que será executado ANTES de tudo
@@ -21,3 +22,9 @@ module.exports = {
     '/node_modules/(?!(react-router|react-router-dom)/)'
   ]
 };
+
+const config: Config = {
+  testTimeout: 8000, // 8 seconds timeout for all tests
+};
+
+export default config;

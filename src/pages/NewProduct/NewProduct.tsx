@@ -46,7 +46,7 @@ const NewProduct: React.FC = () => {
       
       {error && <div className="error-message">{error}</div>}
       
-      <form className="new-product-form" onSubmit={handleSubmit}>
+      <form className="new-product-form" onSubmit={handleSubmit} role='form'>
         <div className="form-group">
           <label htmlFor="name">Nome do Produto</label>
           <input
